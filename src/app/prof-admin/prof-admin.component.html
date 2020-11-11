@@ -1,0 +1,228 @@
+<div *ngIf="isAjouterProf" class="alert alert-success alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Success!</strong>
+</div>
+<form class="form-inline" >
+  <div class="form-group " style="width: 100%">
+
+
+    <!-- Another variation with a button -->
+    <div class="input-group mb-3" style="width: 50%">
+
+      <input type="text" [(ngModel)]="nomChercher" class="form-control form-control-lg" (keyup)="chercherProf(nomChercher)"
+        placeholder="Search ..." name="nomChercher">
+      <div class="input-group-append">
+        <span class="input-group-text"><i class="fa fa-search"></i></span>
+      </div>
+      <button type="button" class="btn ml-2 px-3 add"  data-toggle="modal" data-target="#myModalAjouterProf"
+      (click)="reintialiseProf()" title="add">
+      <i class="fa fa-user-plus "></i>
+    </button>
+    </div>
+    
+  </div>
+</form>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th (click)="onSort()">Nom</th>
+      <th>Prenom</th>
+      <th>Sexe</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody >
+    <tr *ngFor="let p of profsArray">
+      <td>{{p.nom}}</td>
+      <td>{{p.prenom}}</td>
+      <td>{{p.sexe}}</td>
+      <td>
+        <button type="button" class="btn btn-success rounded-circle" data-toggle="modal" data-target="#myProfEditer"
+          (click)="getProf(p.id)" title="Edit">
+          <i class="fa fa-edit"></i>
+        </button>
+
+        <button style="margin-left: 10px" type="button" class="btn btn-danger rounded-circle" data-toggle="modal"
+          data-target="#myProfSupprimer" (click)="getProf(p.id)" title="Delete">
+          <i class="fa fa-trash-o "></i>
+        </button>
+
+              <!-- The Modal Prof Supprimer -->
+      <div class="modal fade" id="myProfSupprimer">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title text-danger">SUPPRESSION</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="container-fluid text-danger">
+                Etes-vous sûr(e) de vouloir supprimer {{prof.nom}} {{prof.prenom}} ?
+              </div>
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                  (click)="supprimerProf()">Supprimer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </td>
+
+      <!-- The Modal Prof Editer -->
+      <div class="modal fade" id="myProfEditer">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title text-success">EDITION</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="form-group">
+                  <label>Id</label>
+                  <input type="text" [(ngModel)]="prof.id" class="form-control" disabled>
+                </div>
+
+                <div class="form-group">
+                  <label>Nom</label>
+                  <input type="text" [(ngModel)]="prof.nom" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Prénom</label>
+                  <input type="text" [(ngModel)]="prof.prenom" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Adresse</label>
+                  <input type="text" [(ngModel)]="prof.adresse" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Sexe: </label>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="radio" [(ngModel)]="prof.sexe" value="M">
+                      Male
+                    </label>
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="radio" [(ngModel)]="prof.sexe" value="F">
+                      Female
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Tel</label>
+                  <input type="tel" [(ngModel)]="prof.tel" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" [(ngModel)]="prof.email" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Date de Naissance</label>
+                  <input type="date" [(ngModel)]="prof.dateNaissance" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>date d'Affiliation</label>
+                  <input type="date" [(ngModel)]="prof.dateAffiliation" class="form-control">
+                </div>
+              </div>
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal"
+                  (click)="editerProf()">Editer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </tr>
+  </tbody>
+
+
+</table>
+
+<div class="pagination justify-content-center">
+  <jw-pagination [items]="profsArray" (changePage)="onChangePageProf($event)"></jw-pagination>
+</div>
+
+
+<!-- The Modal Prof Ajouter -->
+<div class="modal fade" id="myModalAjouterProf">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Ajouter un Prof</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" [(ngModel)]="prof.nom" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" [(ngModel)]="prof.prenom" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Adresse</label>
+            <input type="text" [(ngModel)]="prof.adresse" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Sexe: </label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" [(ngModel)]="prof.sexe" value="M">
+                Male
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" [(ngModel)]="prof.sexe" value="F">
+                Female
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Tel</label>
+            <input type="tel" [(ngModel)]="prof.tel" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" [(ngModel)]="prof.email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Date de Naissance</label>
+            <input type="date" [(ngModel)]="prof.dateNaissance" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>date d'Affiliation</label>
+            <input type="date" [(ngModel)]="prof.dateAffiliation" class="form-control">
+          </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="ajouterProf()">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>

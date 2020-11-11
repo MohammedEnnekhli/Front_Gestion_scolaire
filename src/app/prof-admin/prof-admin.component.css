@@ -1,0 +1,21 @@
+jw-pagination {
+    cursor: pointer;
+}
+
+
+.add{
+    background-color: #673ab7;
+    color: white;
+ }
+ .add:hover{
+     background-color:darkcyan;
+ }
+
+ .retour{
+    background-color:  #607d8b;
+   color: white
+}
+
+.retour:hover{
+   background-color: teal;
+}

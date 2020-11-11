@@ -1,0 +1,90 @@
+<div class="container">
+  <div id="accordianId">
+    <div *ngFor="let m of model; let i = index">
+      <div class="card">
+        <div class="card-header">
+          <a [href]="'#'+m" (click)="(m.valueOf(i)=='Matiere'?getMatiers():getFilieres())"
+            data-toggle="collapse">{{m}}</a>
+        </div>
+
+
+        <div *ngIf="m.valueOf(i)=='Eleve'" id="Eleve" class="collapse in" data-parent="#accordianId">
+          <div class="card-body">
+          <app-eleve-admin></app-eleve-admin>
+        </div>
+
+        </div>
+
+        <div *ngIf="m.valueOf(i)=='Prof'" id="Prof" class="collapse in" data-parent="#accordianId">
+            <div class="card-body">
+              <app-prof-admin></app-prof-admin>
+            </div>
+  
+          </div>
+
+        <div *ngIf="m.valueOf(i)=='Groupe'" id="Groupe" class="collapse in" data-parent="#accordianId">
+          <div class="card-body">
+
+            <app-groupe-admin ></app-groupe-admin>
+
+          </div>
+
+        </div>
+
+        <div *ngIf="m.valueOf(i)=='Matiere'" id="Matiere" class="collapse in" data-parent="#accordianId">
+          <div class="card-body">
+            <app-matiere-admin></app-matiere-admin>
+            <!-- <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Nom Matière</th>
+                  <th>Ajouter</th>
+                  <th>Editer</th>
+                  <th>Supprimer</th>
+
+                </tr>
+              </thead>
+              <tbody *ngFor="let m of matieres?._embedded.matieres">
+                <tr>
+                  <td>{{m.nomM}}</td>
+                </tr>
+              </tbody>
+            </table> -->
+
+
+
+
+          </div>
+
+        </div>
+
+        <div *ngIf="m.valueOf(i)=='Filiere'" id="Filiere" class="collapse in" data-parent="#accordianId">
+          <div class="card-body">
+
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Nom Filière</th>
+                  <th>Ajouter</th>
+                  <th>Editer</th>
+                  <th>Supprimer</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let f of filieres">
+                <tr>
+                  <td>{{f.nomF}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
